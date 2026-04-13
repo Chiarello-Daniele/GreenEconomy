@@ -37,7 +37,7 @@ namespace Green_Economy
                 cmbProvincia.Items.Add(p.Nome);
             cmbProvincia.SelectedIndex = 0;
 
-            // Carica dati salvati se esistono
+            // Carica dati salvati se esistono (mantieni lo storico)
             if (File.Exists(JsonPath))
             {
                 _tuttiDati = CaricaJSON();
@@ -59,7 +59,7 @@ namespace Green_Economy
                 filtrati = _tuttiDati.Where(x => x.Provincia == scelta).ToList();
 
             // Griglia: tutti i record filtrati, dal più recente
-            dgvDati.DataSource = filtrati.OrderByDescending(x => x.DataOra).ToList();
+            RefreshDataGridView(filtrati.OrderByDescending(x => x.DataOra));
 
             // Grafico: un record per provincia (l'ultimo disponibile)
             List<DatoAmbientale> perGrafico = filtrati
@@ -96,19 +96,16 @@ namespace Green_Economy
                     lblStato.Text = "Scaricando " + nome + "...";
                     Application.DoEvents();
 
-                    List<DatoAmbientale> giorni = await ScaricaQuattroGiorniAsync(nome, lat, lon);
-                    nuovi.AddRange(giorni);
+                    // scarica i dati per la provincia (record correnti)
+                    List<DatoAmbientale> dati = await ScaricaDatiProvinciaAsync(nome, lat, lon);
+                    nuovi.AddRange(dati);
 
                     progressBar.Value++;
                     Application.DoEvents();
                 }
 
-                SalvaJSON(nuovi);
-                _tuttiDati = CaricaJSON();
-                MostraDati();
-
-                lblStato.Text = " Completato – " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                MessageBox.Show("Scaricati " + nuovi.Count + " record (4 giorni × 7 province).");
+                // Aggiungi i nuovi record allo storico e aggiorna la UI (helper semplificato)
+                UpdateAfterDownload(nuovi);
             }
             catch (Exception ex)
             {
@@ -120,7 +117,7 @@ namespace Green_Economy
             progressBar.Value = 0;
         }
 
-        private async Task<List<DatoAmbientale>> ScaricaQuattroGiorniAsync(
+        private async Task<List<DatoAmbientale>> ScaricaDatiProvinciaAsync(
             string nome, double lat, double lon)
         {
             List<DatoAmbientale> risultati = new List<DatoAmbientale>();
@@ -132,7 +129,8 @@ namespace Green_Economy
 
                 string sLat = lat.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 string sLon = lon.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                string dataInizio = DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd");
+                // Scarica solo i dati del giorno corrente
+                string dataInizio = DateTime.Now.ToString("yyyy-MM-dd");
                 string dataFine = DateTime.Now.ToString("yyyy-MM-dd");
 
                 // API meteo
@@ -157,15 +155,47 @@ namespace Green_Economy
                 dynamic aria = JsonConvert.DeserializeObject(
                     await client.GetStringAsync(urlAria));
 
-                // Un record per ogni giorno 
-                for (int g = 0; g < 4; g++)
+                // Prendiamo solo il valore dell'ora più recente disponibile (<= ora corrente)
+                try
                 {
-                    int idx = g * 24 + 12;
+                    var times = meteo.hourly.time;
+                    int len = times.Count;
+                    DateTime now = DateTime.Now;
+                    int bestIdx = -1;
+                    for (int i = 0; i < len; i++)
+                    {
+                        try
+                        {
+                            DateTime dt = DateTime.Parse((string)times[i], System.Globalization.CultureInfo.InvariantCulture);
+                            if (dt <= now) bestIdx = i;
+                        }
+                        catch { }
+                    }
+
+                    if (bestIdx == -1) bestIdx = Math.Max(0, len - 1);
+
+                    // Impostiamo la data/ora al momento del download (precisione al minuto)
+                    DateTime downloadTime = DateTime.Now;
+                    var oraCorrenteTroncata = new DateTime(downloadTime.Year, downloadTime.Month, downloadTime.Day, downloadTime.Hour, downloadTime.Minute, 0);
 
                     risultati.Add(new DatoAmbientale
                     {
                         Provincia = nome,
-                        DataOra = DateTime.Now.AddDays(-(3 - g)).Date.AddHours(12),
+                        DataOra = oraCorrenteTroncata,
+                        Temperatura = LeggiDouble(meteo.hourly.temperature_2m, bestIdx),
+                        Vento = LeggiDouble(meteo.hourly.windspeed_10m, bestIdx),
+                        Umidita = (int)LeggiDouble(meteo.hourly.relativehumidity_2m, bestIdx),
+                        Inquinamento = (int)Math.Round(LeggiDouble(aria.hourly.pm2_5, bestIdx))
+                    });
+                }
+                catch
+                {
+                    // fallback: singolo valore a mezzogiorno di oggi
+                    int idx = 12;
+                    risultati.Add(new DatoAmbientale
+                    {
+                        Provincia = nome,
+                        DataOra = DateTime.Now.Date.AddHours(12),
                         Temperatura = LeggiDouble(meteo.hourly.temperature_2m, idx),
                         Vento = LeggiDouble(meteo.hourly.windspeed_10m, idx),
                         Umidita = (int)LeggiDouble(meteo.hourly.relativehumidity_2m, idx),
@@ -215,6 +245,23 @@ namespace Green_Economy
             File.WriteAllText(JsonPath, JsonConvert.SerializeObject(storico, Formatting.Indented));
         }
 
+        // Sovrascrive il file JSON con la lista fornita (pulizia completa)
+        private void SalvaJSONOverwrite(List<DatoAmbientale> nuovi)
+        {
+            File.WriteAllText(JsonPath, JsonConvert.SerializeObject(nuovi, Formatting.Indented));
+        }
+
+        // Riduce lo storico mantenendo solo l'ultimo record per provincia
+        private List<DatoAmbientale> PulisciStorico(List<DatoAmbientale> storico)
+        {
+            return storico
+                .Where(x => !string.IsNullOrEmpty(x.Provincia))
+                .GroupBy(x => x.Provincia)
+                .Select(g => g.OrderByDescending(x => x.DataOra).First())
+                .OrderBy(x => x.Provincia)
+                .ToList();
+        }
+
         private List<DatoAmbientale> CaricaJSON()
         {
             try
@@ -223,6 +270,54 @@ namespace Green_Economy
                     File.ReadAllText(JsonPath)) ?? new List<DatoAmbientale>();
             }
             catch { return new List<DatoAmbientale>(); }
+        }
+
+        // Semplifica l'aggiornamento della DataGridView in un unico posto
+        private void RefreshDataGridView(IEnumerable<DatoAmbientale> lista)
+        {
+            var toShow = lista?.ToList() ?? new List<DatoAmbientale>();
+            dgvDati.DataSource = null;
+            dgvDati.DataSource = toShow;
+            try
+            {
+                if (dgvDati.Columns.Contains("DataOra"))
+                {
+                    dgvDati.Columns["DataOra"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
+                    dgvDati.Columns["DataOra"].HeaderText = "Data e Ora";
+                }
+            }
+            catch { }
+        }
+
+        // Restituisce l'ultimo record disponibile per provincia da una sorgente
+        private List<DatoAmbientale> GetLatestPerProvince(IEnumerable<DatoAmbientale> source)
+        {
+            return (source ?? Enumerable.Empty<DatoAmbientale>())
+                .Where(x => !string.IsNullOrEmpty(x.Provincia))
+                .GroupBy(x => x.Provincia)
+                .Select(g => g.OrderByDescending(x => x.DataOra).First())
+                .OrderBy(x => x.Provincia)
+                .ToList();
+        }
+
+        // Operazioni dopo il download: salva, ricarica storico, aggiorna griglia e grafico
+        private void UpdateAfterDownload(List<DatoAmbientale> nuovi)
+        {
+            SalvaJSON(nuovi); // aggiunge allo storico
+            _tuttiDati = CaricaJSON();
+            cmbProvincia.SelectedIndex = 0;
+
+            // mostra tutto lo storico
+            RefreshDataGridView(_tuttiDati.OrderByDescending(x => x.DataOra));
+
+            // aggiorna grafico con l'ultimo per provincia
+            var perGrafico = GetLatestPerProvince(_tuttiDati);
+            DisegnaGrafico(perGrafico);
+
+            lblStato.Text = "Completato – " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") +
+                            "  |  Scaricati: " + nuovi.Count + "  |  Record totali: " + _tuttiDati.Count;
+
+            MessageBox.Show("Scaricati " + nuovi.Count + " record (1 per provincia, ora corrente).\nI dati vecchi sono stati mantenuti nel file.");
         }
 
         private void DisegnaGrafico(List<DatoAmbientale> lista)
