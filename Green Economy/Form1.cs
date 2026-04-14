@@ -37,10 +37,13 @@ namespace Green_Economy
                 cmbProvincia.Items.Add(p.Nome);
             cmbProvincia.SelectedIndex = 0;
 
+            // Inizializza il file JSON se non esiste o è vuoto
+            InitializeJSONFile();
+
             // Carica dati salvati se esistono (mantieni lo storico)
-            if (File.Exists(JsonPath))
+            _tuttiDati = CaricaJSON();
+            if (_tuttiDati.Count > 0)
             {
-                _tuttiDati = CaricaJSON();
                 MostraDati();
             }
         }
@@ -318,6 +321,41 @@ namespace Green_Economy
                             "  |  Scaricati: " + nuovi.Count + "  |  Record totali: " + _tuttiDati.Count;
 
             MessageBox.Show("Scaricati " + nuovi.Count + " record (1 per provincia, ora corrente).\nI dati vecchi sono stati mantenuti nel file.");
+        }
+
+        // Crea il file JSON vuoto se non esiste o non contiene dati validi
+        private void InitializeJSONFile()
+        {
+            try
+            {
+                // Se il file non esiste, crealo con un array vuoto
+                if (!File.Exists(JsonPath))
+                {
+                    File.WriteAllText(JsonPath, "[]");
+                    return;
+                }
+
+                // Leggi il file e verifica se è valido
+                string content = File.ReadAllText(JsonPath);
+
+                // Se è vuoto o non è valido JSON, ricrealo
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    File.WriteAllText(JsonPath, "[]");
+                    return;
+                }
+
+                // Prova a deserializzare: se fallisce, ricrea il file
+                try
+                {
+                    JsonConvert.DeserializeObject<List<DatoAmbientale>>(content);
+                }
+                catch
+                {
+                    File.WriteAllText(JsonPath, "[]");
+                }
+            }
+            catch { /* ignora errori nella inizializzazione */ }
         }
 
         private void DisegnaGrafico(List<DatoAmbientale> lista)
