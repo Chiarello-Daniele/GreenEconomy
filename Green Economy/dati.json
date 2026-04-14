@@ -1,1 +1,170 @@
-[]
+[
+  {
+    "Provincia": "Venezia",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 18.5,
+    "Vento": 12.3,
+    "Umidita": 65,
+    "Inquinamento": 28
+  },
+  {
+    "Provincia": "Verona",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 19.2,
+    "Vento": 10.5,
+    "Umidita": 62,
+    "Inquinamento": 25
+  },
+  {
+    "Provincia": "Padova",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 17.8,
+    "Vento": 11.2,
+    "Umidita": 68,
+    "Inquinamento": 32
+  },
+  {
+    "Provincia": "Treviso",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 18.9,
+    "Vento": 9.8,
+    "Umidita": 66,
+    "Inquinamento": 26
+  },
+  {
+    "Provincia": "Vicenza",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 19.5,
+    "Vento": 10.1,
+    "Umidita": 61,
+    "Inquinamento": 23
+  },
+  {
+    "Provincia": "Belluno",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 15.3,
+    "Vento": 15.7,
+    "Umidita": 72,
+    "Inquinamento": 18
+  },
+  {
+    "Provincia": "Rovigo",
+    "DataOra": "2026-04-14T14:30:00",
+    "Temperatura": 20.1,
+    "Vento": 8.9,
+    "Umidita": 59,
+    "Inquinamento": 29
+  },
+  {
+    "Provincia": "Venezia",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 17.2,
+    "Vento": 13.5,
+    "Umidita": 68,
+    "Inquinamento": 31
+  },
+  {
+    "Provincia": "Verona",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 18.0,
+    "Vento": 11.2,
+    "Umidita": 65,
+    "Inquinamento": 28
+  },
+  {
+    "Provincia": "Padova",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 16.5,
+    "Vento": 12.8,
+    "Umidita": 71,
+    "Inquinamento": 35
+  },
+  {
+    "Provincia": "Treviso",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 17.6,
+    "Vento": 10.5,
+    "Umidita": 69,
+    "Inquinamento": 29
+  },
+  {
+    "Provincia": "Vicenza",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 18.2,
+    "Vento": 10.9,
+    "Umidita": 64,
+    "Inquinamento": 26
+  },
+  {
+    "Provincia": "Belluno",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 14.1,
+    "Vento": 16.3,
+    "Umidita": 75,
+    "Inquinamento": 20
+  },
+  {
+    "Provincia": "Rovigo",
+    "DataOra": "2026-04-13T14:30:00",
+    "Temperatura": 19.0,
+    "Vento": 9.7,
+    "Umidita": 62,
+    "Inquinamento": 32
+  },
+  {
+    "Provincia": "Venezia",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 16.8,
+    "Vento": 14.2,
+    "Umidita": 70,
+    "Inquinamento": 33
+  },
+  {
+    "Provincia": "Verona",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 17.5,
+    "Vento": 12.0,
+    "Umidita": 67,
+    "Inquinamento": 30
+  },
+  {
+    "Provincia": "Padova",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 16.2,
+    "Vento": 13.5,
+    "Umidita": 73,
+    "Inquinamento": 37
+  },
+  {
+    "Provincia": "Treviso",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 17.1,
+    "Vento": 11.2,
+    "Umidita": 71,
+    "Inquinamento": 31
+  },
+  {
+    "Provincia": "Vicenza",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 17.8,
+    "Vento": 11.6,
+    "Umidita": 66,
+    "Inquinamento": 28
+  },
+  {
+    "Provincia": "Belluno",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 13.9,
+    "Vento": 17.1,
+    "Umidita": 77,
+    "Inquinamento": 22
+  },
+  {
+    "Provincia": "Rovigo",
+    "DataOra": "2026-04-12T14:30:00",
+    "Temperatura": 18.6,
+    "Vento": 10.3,
+    "Umidita": 64,
+    "Inquinamento": 34
+  }
+]
