@@ -11,7 +11,8 @@ namespace Green_Economy
 {
     public partial class Form1 : Form
     {
-        private const string JsonPath = "dati.json";
+        // Percorso del file dati.json nella cartella di esecuzione del programma
+        private string JsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dati.json");
 
         private readonly List<(string Nome, double Lat, double Lon)> _province =
             new List<(string, double, double)>
