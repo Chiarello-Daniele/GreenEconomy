@@ -1,0 +1,26 @@
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\bin\Debug\Green Economy.exe.config
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\bin\Debug\Green Economy.exe
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\bin\Debug\Green Economy.pdb
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.AssemblyReference.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green_Economy.Form1.resources
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green_Economy.Properties.Resources.resources
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.GenerateResource.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.CoreCompileInputs.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Ec.264B3344.Up2Date
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Economy.exe
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\C#\4°\Green Economy\Green Economy\obj\Debug\Green Economy.pdb
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\bin\Debug\Green Economy.exe.config
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\bin\Debug\Green Economy.exe
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\bin\Debug\Green Economy.pdb
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.AssemblyReference.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green_Economy.Form1.resources
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green_Economy.Properties.Resources.resources
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.GenerateResource.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Economy.csproj.CoreCompileInputs.cache
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Ec.264B3344.Up2Date
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Economy.exe
+C:\Users\Daniele  Chiarello\OneDrive\Desktop\Informatica\Green Economy\Green Economy\obj\Debug\Green Economy.pdb
